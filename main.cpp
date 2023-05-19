@@ -1,31 +1,30 @@
 #include <iostream>
+#include <fstream>
 #include <string>
-#include <sstream>
-
 class TPen {
-   private:
-     int FColor;
-   public:
-     std::string getColor();
-     void setColor(std::string newColor);
+private:
+    int FColor;
+public:
+    void setColor(int newColor) {
+        FColor = newColor;
+    }
+    int getColor() const {
+        return FColor;
+    }
 };
-
-void TPen::setColor(std::string newColor) {
-   std::stringstream s;
-   s << newColor;
-   s >> std::hex >> FColor;
-}
-
-std::string TPen::getColor() {
-   std::stringstream s;
-   s << std::hex << FColor;
-   return s.str();
-}
-
 int main() {
-   using namespace std;
-   string redColor = "FF0000";
-   TPen pen;
-   pen.setColor(redColor);
-   cout << "Color of pen is #" << pen.getColor() << endl;
+    const int n = 3;
+    TPen pens[n];
+    std::ifstream file("colors.txt");
+    int color;
+    int i = 0;
+    while (file >> std::hex >> color && i < n) {
+        pens[i].setColor(color);
+        i++;
+    }
+    for (int i = 0; i < n; i++) {
+        std::cout << "Color of pen " << i+1 << " is #" << std::hex << pens[i].getColor() << std::endl;
+    }
+
+    return 0;
 }
