@@ -1,21 +1,25 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 
 class TPen {
    private:
-   std::string FColor;
+     int FColor;
    public:
-   std::string getColor();
-   void setColor(std::string newColor);
+     std::string getColor();
+     void setColor(std::string newColor);
 };
 
-
 void TPen::setColor(std::string newColor) {
-   FColor = newColor;
+   std::stringstream s;
+   s << newColor;
+   s >> std::hex >> FColor;
 }
 
 std::string TPen::getColor() {
-   return FColor;
+   std::stringstream s;
+   s << std::hex << FColor;
+   return s.str();
 }
 
 int main() {
@@ -23,6 +27,5 @@ int main() {
    string redColor = "FF0000";
    TPen pen;
    pen.setColor(redColor);
-  //cout << std::pen.FColor << endl;
-  cout << "Color of pen is " << pen.getColor() << endl;
+   cout << "Color of pen is #" << pen.getColor() << endl;
 }
